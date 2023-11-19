@@ -1,0 +1,437 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>TEST_FlowTools</title><meta name="generator" content="MATLAB 9.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2023-11-19"><meta name="DC.source" content="TEST_FlowTools.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Test of Flow Tools</a></li><li><a href="#2">~~~~~~~~~~TEST FRAMEWORK:~~~~~~~~~~</a></li><li><a href="#3">Test test_min:</a></li><li><a href="#4">~~~~~~~~~~ISENTROPIC TOOL:~~~~~~~~~~</a></li><li><a href="#5">Test mach_FROM_a_ratio SUPERSONIC:</a></li><li><a href="#6">Test mach_FROM_a_ratio SUBSONIC:</a></li><li><a href="#7">Test aratio_FROM_mach:</a></li><li><a href="#8">Test totstat_tratio_FROM_mach:</a></li><li><a href="#9">Test totstat_pratio_FROM_mach:</a></li><li><a href="#10">~~~~~~~~~~NORMAL SHOCK TOOL:~~~~~~~~~</a></li><li><a href="#11">Test upstream_mach_FROM_totPratio:</a></li><li><a href="#12">Test downstream_mach_FROM_upstream_mach:</a></li><li><a href="#13">~~~~~~~~~~NOZZLE FLOW TOOL:~~~~~~~~~</a></li><li><a href="#14">Test exit_mach_WITH_shock:</a></li><li><a href="#15">Test shock_a_ratio:</a></li><li><a href="#16">Test exit_mach_WITH_shock:</a></li><li><a href="#17">Test shock_totPratio:</a></li><li><a href="#18">RESET FUNCTION (KEEP AT END):</a></li></ul></div><h2 id="1">Test of Flow Tools</h2><p>Utilizes Reference values found in 334 compressible flow table and past homework problems to check all my tools out.</p><pre class="codeinput">reset();
+<span class="comment">% clc;</span>
+<span class="comment">% pause;</span>
+</pre><h2 id="2">~~~~~~~~~~TEST FRAMEWORK:~~~~~~~~~~</h2><h2 id="3">Test test_min:</h2><pre class="codeinput">truth = 4;
+test_tools.validate(<span class="string">"Test of Test"</span>,<span class="keyword">...</span>
+    IsentropicFlow_Tools.test_min(6), <span class="keyword">...</span>
+    truth, <span class="keyword">...</span>
+    0.01, <span class="keyword">...</span>
+    true);
+</pre><pre class="codeoutput">	SUCCESS		Test of Test
+				Truth: 4.000	Output: 4.000
+</pre><h2 id="4">~~~~~~~~~~ISENTROPIC TOOL:~~~~~~~~~~</h2><h2 id="5">Test mach_FROM_a_ratio SUPERSONIC:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: Calculator at bottom of https://www.grc.nasa.gov/www/k-12/airplane/isentrop.html</span>
+gamma = 1.4;
+truth_mach=2.2;
+a_ratio = 2.005;
+test_tools.validate(<span class="string">"mach_FROM_a_ratio supersonic"</span>,<span class="keyword">...</span>
+    IsentropicFlow_Tools.mach_FROM_a_ratio(gamma, a_ratio, true),<span class="keyword">...</span>
+    truth_mach,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		mach_FROM_a_ratio supersonic
+				Truth: 2.200	Output: 2.200
+</pre><h2 id="6">Test mach_FROM_a_ratio SUBSONIC:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: Calculator at bottom of https://www.grc.nasa.gov/www/k-12/airplane/isentrop.html</span>
+gamma = 1.4;
+truth_mach=0.30;
+a_ratio = 2;
+test_tools.validate(<span class="string">"mach_FROM_a_ratio subsonic"</span>,<span class="keyword">...</span>
+    IsentropicFlow_Tools.mach_FROM_a_ratio(gamma, a_ratio, false),<span class="keyword">...</span>
+    truth_mach,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		mach_FROM_a_ratio subsonic
+				Truth: 0.300	Output: 0.306
+</pre><h2 id="7">Test aratio_FROM_mach:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: Calculator at bottom of https://www.grc.nasa.gov/www/k-12/airplane/isentrop.html</span>
+gamma = 1.4;
+mach=10;
+truth_aratio = 535.937;
+test_tools.validate(<span class="string">"aratio_FROM_mach"</span>,<span class="keyword">...</span>
+    IsentropicFlow_Tools.aratio_FROM_mach(gamma, mach),<span class="keyword">...</span>
+    truth_aratio,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		aratio_FROM_mach
+				Truth: 535.937	Output: 535.938
+</pre><h2 id="8">Test totstat_tratio_FROM_mach:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: AAE 334 Compressible Flow Table</span>
+gamma = 1.4;
+mach=3.5;
+truth_tratio = 3.45;
+test_tools.validate(<span class="string">"totstat_tratio_FROM_mach"</span>,<span class="keyword">...</span>
+    IsentropicFlow_Tools.totstat_tratio_FROM_mach(gamma, mach),<span class="keyword">...</span>
+    truth_tratio,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		totstat_tratio_FROM_mach
+				Truth: 3.450	Output: 3.450
+</pre><h2 id="9">Test totstat_pratio_FROM_mach:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: AAE 334 Compressible Flow Table</span>
+gamma = 1.4;
+mach=3.5;
+truth_pratio = 76.272;
+test_tools.validate(<span class="string">"totstat_pratio_FROM_mach"</span>,<span class="keyword">...</span>
+    IsentropicFlow_Tools.totstat_pratio_FROM_mach(gamma, mach),<span class="keyword">...</span>
+    truth_pratio,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		totstat_pratio_FROM_mach
+				Truth: 76.272	Output: 76.272
+</pre><h2 id="10">~~~~~~~~~~NORMAL SHOCK TOOL:~~~~~~~~~</h2><h2 id="11">Test upstream_mach_FROM_totPratio:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: AAE 334 Shock Table Spreadsheet</span>
+gamma = 1.4;
+ptotaftershock = 0.139;
+ptotbeforeshock = 1;
+
+truth_mach = 4.0;
+test_tools.validate(<span class="string">"upstream_mach_FROM_totPratio"</span>,<span class="keyword">...</span>
+    NormalShock_Tools.upstream_mach_FROM_totPratio(gamma, ptotaftershock, ptotbeforeshock),<span class="keyword">...</span>
+    truth_mach,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		upstream_mach_FROM_totPratio
+				Truth: 4.000	Output: 3.998
+</pre><h2 id="12">Test downstream_mach_FROM_upstream_mach:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: AAE 334 Shock Table Spreadsheet</span>
+gamma = 1.4;
+upstream_mach = 5.5;
+truth_downstreammach = 0.409;
+test_tools.validate(<span class="string">"downstream_mach_FROM_upstream_mach"</span>,<span class="keyword">...</span>
+    NormalShock_Tools.downstream_mach_FROM_upstream_mach(gamma, upstream_mach),<span class="keyword">...</span>
+    truth_downstreammach,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		downstream_mach_FROM_upstream_mach
+				Truth: 0.409	Output: 0.409
+</pre><h2 id="13">~~~~~~~~~~NOZZLE FLOW TOOL:~~~~~~~~~</h2><h2 id="14">Test exit_mach_WITH_shock:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: AAE 334 HW10 Problem #2</span>
+gamma = 1.4;
+upstream_ptot = 100;
+backpressure = 50;
+throat_area = pi;
+exit_area = 4.*pi;
+truth_mach = 0.287;
+test_tools.validate(<span class="string">"exit_mach_WITH_shock"</span>,<span class="keyword">...</span>
+    NozzleFlow_Tools.exit_mach_WITH_shock(gamma, upstream_ptot, backpressure, throat_area, exit_area),<span class="keyword">...</span>
+    truth_mach,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		exit_mach_WITH_shock
+				Truth: 0.287	Output: 0.287
+</pre><h2 id="15">Test shock_a_ratio:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: AAE 334 HW10 Problem #2</span>
+gamma = 1.4;
+upstream_ptot = 100;
+backpressure = 50;
+throat_area = pi;
+exit_area = 4.*pi;
+truth_shock_aratio = 2.463;
+test_tools.validate(<span class="string">"shock_a_ratio"</span>,<span class="keyword">...</span>
+    NozzleFlow_Tools.shock_a_ratio(gamma, upstream_ptot, backpressure, throat_area, exit_area),<span class="keyword">...</span>
+    truth_shock_aratio,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		shock_a_ratio
+				Truth: 2.463	Output: 2.460
+</pre><h2 id="16">Test exit_mach_WITH_shock:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: AAE 334 HW10 Problem #2</span>
+gamma = 1.4;
+upstream_ptot = 100;
+backpressure = 50;
+throat_area = pi;
+exit_area = 4.*pi;
+truth_mach = 0.287;
+test_tools.validate(<span class="string">"exit_mach_WITH_shock"</span>,<span class="keyword">...</span>
+    NozzleFlow_Tools.exit_mach_WITH_shock(gamma, upstream_ptot, backpressure, throat_area, exit_area),<span class="keyword">...</span>
+    truth_mach,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		exit_mach_WITH_shock
+				Truth: 0.287	Output: 0.287
+</pre><h2 id="17">Test shock_totPratio:</h2><pre class="codeinput"><span class="comment">%TRUTH SOURCE: AAE 334 HW10 Problem #2</span>
+gamma = 1.4;
+upstream_ptot = 100;
+backpressure = 50;
+throat_area = pi;
+exit_area = 4.*pi;
+truth_shock_totPratio = 0.529;
+test_tools.validate(<span class="string">"shock_totPratio"</span>,<span class="keyword">...</span>
+    NozzleFlow_Tools.shock_totPratio(gamma, upstream_ptot, backpressure, throat_area, exit_area),<span class="keyword">...</span>
+    truth_shock_totPratio,<span class="keyword">...</span>
+    0.01,<span class="keyword">...</span>
+    true);
+
+reset();
+</pre><pre class="codeoutput">	SUCCESS		shock_totPratio
+				Truth: 0.529	Output: 0.529
+</pre><h2 id="18">RESET FUNCTION (KEEP AT END):</h2><pre class="codeinput"><span class="keyword">function</span> reset
+    clear;
+    addpath <span class="string">../</span>
+    <span class="keyword">global</span> test_utils;
+    <span class="keyword">global</span> isentropic_tool;
+    <span class="keyword">global</span> step;
+    test_utils = test_tools;
+    isentropic_tool = IsentropicFlow_Tools;
+    step = false;
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Test of Flow Tools
+% Utilizes Reference values found in 334 compressible flow table and past
+% homework problems to check all my tools out.
+reset();
+% clc;
+% pause;
+%% ~~~~~~~~~~TEST FRAMEWORK:~~~~~~~~~~
+%% Test test_min:
+truth = 4;
+test_tools.validate("Test of Test",...
+    IsentropicFlow_Tools.test_min(6), ...
+    truth, ...
+    0.01, ...
+    true);
+%% ~~~~~~~~~~ISENTROPIC TOOL:~~~~~~~~~~
+%% Test mach_FROM_a_ratio SUPERSONIC:
+%TRUTH SOURCE: Calculator at bottom of https://www.grc.nasa.gov/www/k-12/airplane/isentrop.html
+gamma = 1.4;
+truth_mach=2.2;
+a_ratio = 2.005;
+test_tools.validate("mach_FROM_a_ratio supersonic",...
+    IsentropicFlow_Tools.mach_FROM_a_ratio(gamma, a_ratio, true),...
+    truth_mach,...
+    0.01,...
+    true);
+
+reset();
+
+%% Test mach_FROM_a_ratio SUBSONIC:
+%TRUTH SOURCE: Calculator at bottom of https://www.grc.nasa.gov/www/k-12/airplane/isentrop.html
+gamma = 1.4;
+truth_mach=0.30;
+a_ratio = 2;
+test_tools.validate("mach_FROM_a_ratio subsonic",...
+    IsentropicFlow_Tools.mach_FROM_a_ratio(gamma, a_ratio, false),...
+    truth_mach,...
+    0.01,...
+    true);
+
+reset();
+
+%% Test aratio_FROM_mach:
+%TRUTH SOURCE: Calculator at bottom of https://www.grc.nasa.gov/www/k-12/airplane/isentrop.html
+gamma = 1.4;
+mach=10;
+truth_aratio = 535.937;
+test_tools.validate("aratio_FROM_mach",...
+    IsentropicFlow_Tools.aratio_FROM_mach(gamma, mach),...
+    truth_aratio,...
+    0.01,...
+    true);
+
+reset();
+
+%% Test totstat_tratio_FROM_mach:
+%TRUTH SOURCE: AAE 334 Compressible Flow Table
+gamma = 1.4;
+mach=3.5;
+truth_tratio = 3.45;
+test_tools.validate("totstat_tratio_FROM_mach",...
+    IsentropicFlow_Tools.totstat_tratio_FROM_mach(gamma, mach),...
+    truth_tratio,...
+    0.01,...
+    true);
+
+reset();
+
+
+%% Test totstat_pratio_FROM_mach:
+%TRUTH SOURCE: AAE 334 Compressible Flow Table
+gamma = 1.4;
+mach=3.5;
+truth_pratio = 76.272;
+test_tools.validate("totstat_pratio_FROM_mach",...
+    IsentropicFlow_Tools.totstat_pratio_FROM_mach(gamma, mach),...
+    truth_pratio,...
+    0.01,...
+    true);
+
+reset();
+
+%% ~~~~~~~~~~NORMAL SHOCK TOOL:~~~~~~~~~
+%% Test upstream_mach_FROM_totPratio:
+%TRUTH SOURCE: AAE 334 Shock Table Spreadsheet
+gamma = 1.4;
+ptotaftershock = 0.139;
+ptotbeforeshock = 1;
+
+truth_mach = 4.0;
+test_tools.validate("upstream_mach_FROM_totPratio",...
+    NormalShock_Tools.upstream_mach_FROM_totPratio(gamma, ptotaftershock, ptotbeforeshock),...
+    truth_mach,...
+    0.01,...
+    true);
+
+reset();
+
+%% Test downstream_mach_FROM_upstream_mach:
+%TRUTH SOURCE: AAE 334 Shock Table Spreadsheet
+gamma = 1.4;
+upstream_mach = 5.5;
+truth_downstreammach = 0.409;
+test_tools.validate("downstream_mach_FROM_upstream_mach",...
+    NormalShock_Tools.downstream_mach_FROM_upstream_mach(gamma, upstream_mach),...
+    truth_downstreammach,...
+    0.01,...
+    true);
+
+reset();
+
+
+%% ~~~~~~~~~~NOZZLE FLOW TOOL:~~~~~~~~~
+%% Test exit_mach_WITH_shock:
+%TRUTH SOURCE: AAE 334 HW10 Problem #2
+gamma = 1.4;
+upstream_ptot = 100;
+backpressure = 50;
+throat_area = pi;
+exit_area = 4.*pi;
+truth_mach = 0.287;
+test_tools.validate("exit_mach_WITH_shock",...
+    NozzleFlow_Tools.exit_mach_WITH_shock(gamma, upstream_ptot, backpressure, throat_area, exit_area),...
+    truth_mach,...
+    0.01,...
+    true);
+
+reset();
+
+%% Test shock_a_ratio:
+%TRUTH SOURCE: AAE 334 HW10 Problem #2
+gamma = 1.4;
+upstream_ptot = 100;
+backpressure = 50;
+throat_area = pi;
+exit_area = 4.*pi;
+truth_shock_aratio = 2.463;
+test_tools.validate("shock_a_ratio",...
+    NozzleFlow_Tools.shock_a_ratio(gamma, upstream_ptot, backpressure, throat_area, exit_area),...
+    truth_shock_aratio,...
+    0.01,...
+    true);
+
+reset();
+%% Test exit_mach_WITH_shock:
+%TRUTH SOURCE: AAE 334 HW10 Problem #2
+gamma = 1.4;
+upstream_ptot = 100;
+backpressure = 50;
+throat_area = pi;
+exit_area = 4.*pi;
+truth_mach = 0.287;
+test_tools.validate("exit_mach_WITH_shock",...
+    NozzleFlow_Tools.exit_mach_WITH_shock(gamma, upstream_ptot, backpressure, throat_area, exit_area),...
+    truth_mach,...
+    0.01,...
+    true);
+
+reset();
+
+%% Test shock_totPratio:
+%TRUTH SOURCE: AAE 334 HW10 Problem #2
+gamma = 1.4;
+upstream_ptot = 100;
+backpressure = 50;
+throat_area = pi;
+exit_area = 4.*pi;
+truth_shock_totPratio = 0.529;
+test_tools.validate("shock_totPratio",...
+    NozzleFlow_Tools.shock_totPratio(gamma, upstream_ptot, backpressure, throat_area, exit_area),...
+    truth_shock_totPratio,...
+    0.01,...
+    true);
+
+reset();
+
+%% RESET FUNCTION (KEEP AT END):
+function reset
+    clear;
+    addpath ../
+    global test_utils;
+    global isentropic_tool;
+    global step;
+    test_utils = test_tools;
+    isentropic_tool = IsentropicFlow_Tools;
+    step = false;
+end
+##### SOURCE END #####
+--></body></html>

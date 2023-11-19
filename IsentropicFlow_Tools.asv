@@ -1,0 +1,25 @@
+%% Contains some math for normal shock relations
+classdef IsentropicFlow_Tools
+properties
+end
+methods
+    function a_ratio = a_ratio_FROM_mach(obj, gamma, mach, is_supersonic)
+        % Numerically determines area ratio from mach number
+        % 
+        % is_supersonic: Flag to set true if supersonic
+        % Solves Eq (9) in https://www.grc.nasa.gov/www/k-12/airplane/isentrop.html
+
+        gp1 = gamma+1;
+        gm1 = gamma-1;
+
+        options = optimoptions('fmincon','disp','off');
+        fun = @(m_mach) (gp1./2).^-(gp1./(2.*gm1))...
+            .*(1+(gm1)./2.*m_mach.^2).^((gp1)/(2.*gm1))./(m_mach);
+
+        if (is_supersonic)
+            mach_max = 1
+        else
+        end
+    end
+end
+end
