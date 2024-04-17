@@ -36,6 +36,20 @@ methods(Static)
         mach = sqrt((1+gm1./2.*up_mach.^2)./(g.*up_mach.^2-gm1/2));
     end
 
-%     function pratio = shock_totPratio_FROM_
+    function mach = upstream_mach_FROM_statPratio(gamma, pratio)
+        g = gamma;
+        gp1 = g+1;
+        gm1 = g-1;
+           
+        mach = sqrt((pratio.*gp1+gm1)./(2.*g));
+    end
+
+    function pratio = pratio_FROM_mach(gamma, mach)
+        g = gamma;
+        gp1 = g+1;
+        gm1 = g-1;
+        
+        pratio = (2.*g.*mach.^2-gm1)./gp1;
+    end
 end
 end

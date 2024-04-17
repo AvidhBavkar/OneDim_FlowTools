@@ -6,7 +6,7 @@ methods(Static)
     function success = validate(fname, input,truth,tolerance,display)
         if abs(input-truth)>tolerance
             success=false;
-            fprintf('\tFAILED!\t\t%s\n', fname);
+            fprintf('!\tFAILED!\t\t%s\n', fname);
             fprintf('\t\t\t\tTruth: %.3f\tOutput: %.3f\n', truth, input);
         else
             success=true;
