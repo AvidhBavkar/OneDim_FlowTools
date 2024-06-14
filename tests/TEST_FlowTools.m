@@ -80,6 +80,19 @@ test_tools.validate("totstat_pratio_FROM_mach",...
 
 reset();
 
+%% Test mach_FROM_totstat_pratio:
+%TRUTH SOURCE: https://devenport.aoe.vt.edu/aoe3114/calc.html
+gamma = 1.4;
+tot_stat_pratio = 1./0.414;
+truth_mach = 1.19698652;
+test_tools.validate("mach_FROM_totstat_pratio",...
+    IsentropicFlow_Tools.mach_FROM_totstat_pratio(gamma, tot_stat_pratio),...
+    truth_mach,...
+    0.01,...
+    show_successful_values);
+
+reset();
+
 %% ~~~~~~~~~~NORMAL SHOCK TOOL:~~~~~~~~~
 %% Test upstream_mach_FROM_totPratio:
 %TRUTH SOURCE: AAE 334 Shock Table Spreadsheet

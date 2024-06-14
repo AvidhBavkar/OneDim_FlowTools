@@ -35,6 +35,15 @@ methods(Static)
             fun, mach_guess, [],[],[],[], mach_min, mach_max,[],options);
     end
 
+    function mach = mach_FROM_totstat_pratio(gamma, totstat_pratio)
+        g = gamma;
+        gp1 = gamma+1;
+        gm1 = gamma-1;
+
+        mach = sqrt((totstat_pratio.^(gm1./g) - 1).*(2./gm1));
+%         mach = sqrt((1 - totstat_pratio.^((gamma-1)./(gamma))).*2./(gamma-1));
+    end
+
     function aratio = aratio_FROM_mach(gamma, mach)
         % area ratio from mach number
         % 
