@@ -4,6 +4,14 @@ classdef IsentropicFlow_Tools
 properties
 end
 methods(Static)
+    
+    function t_ratio = tratio_from_pratio(gamma, p_ratio)
+        t_ratio = p_ratio.^((gamma-1)./(gamma));
+    end
+    function p_ratio = pratio_from_tratio(gamma, t_ratio)
+        p_ratio = t_ratio.^((gamma)./(gamma-1));
+    end
+
     function mach = mach_FROM_a_ratio(gamma, a_ratio, is_supersonic)
         % Numerically determines mach number from area ratio
         % 
@@ -41,7 +49,14 @@ methods(Static)
         gm1 = gamma-1;
 
         mach = sqrt((totstat_pratio.^(gm1./g) - 1).*(2./gm1));
-%         mach = sqrt((1 - totstat_pratio.^((gamma-1)./(gamma))).*2./(gamma-1));
+    end
+
+    function mach = mach_FROM_totstat_tratio(gamma, totstat_tratio)
+        g = gamma;
+        gp1 = gamma+1;
+        gm1 = gamma-1;
+
+        mach = sqrt((totstat_tratio - 1).*(2./gm1));
     end
 
     function aratio = aratio_FROM_mach(gamma, mach)
